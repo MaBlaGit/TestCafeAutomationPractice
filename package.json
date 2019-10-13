@@ -1,0 +1,19 @@
+{
+  "name": "testcafe-automationpractice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./e2e/**/*.js",
+    "test": "npx testcafe chrome -e -u ./e2e/tests/**/*.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-plugin-require": "0.0.1",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "testcafe": "^1.5.0"
+  }
+}
