@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./e2e/**/*.js",
+    "test": "testcafe chrome -e -u ./e2e/tests/**/*.js",
     "test-chrome": "npx testcafe chrome -e -u ./e2e/tests/**/*.js",
     "test-firefox": "npx testcafe firefox -e -u ./e2e/tests/**/*.js",
     "test-all": "npx testcafe chrome -e -u ./e2e/tests/**/*.js && npx testcafe firefox -e -u ./e2e/tests/**/*.js"
