@@ -4,6 +4,11 @@ export class AuthenticationPage {
 	constructor(){
 		this.authenticationHeader = Selector('.page-heading')
 		this.createAccountEmailAddress = Selector('#email_create')
+
+		this.emailInputField = Selector('#email')
+		this.passwordInputField = Selector('#passwd')
+		this.signInButton = Selector('#SubmitLogin')
+
 		this.createAccountButton = Selector('#SubmitCreate')
 		this.accountCreationForm = Selector('#account-creation_form')
 		this.genderRadioButton = Selector('.radio-inline')
@@ -44,6 +49,18 @@ export class AuthenticationPage {
 	clickOnCreateAccountButton = async () => {
 		await t
 			.click(this.createAccountButton)
+	}
+
+	enterEmailAddress = async (emailAddress) => {
+		await t.typeText(this.emailInputField, emailAddress)
+	}
+
+	enterPassword = async (password) => {
+		await t.typeText(this.passwordInputField, password)
+	}
+
+	clickOnSignInButton = async () => {
+		await t.click(this.signInButton)
 	}
 
 	createAccount = async (emailAddress) => {
