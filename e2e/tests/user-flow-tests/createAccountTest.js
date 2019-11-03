@@ -9,26 +9,26 @@ const mainPage = new MainPage()
 const authenticationPage = new AuthenticationPage()
 const myAccountPage = new MyAccountPage()
 
-fixture`Create account test`
+fixture`Create account, log in and make order`
 	.page(getUrl('/index.php'))
 	.beforeEach(async t => {
 		await t.maximizeWindow()
 	})
 
 test('Unregistered user can register to Your Logo shop', async t => {
-	let fakeUserEmail = faker.internet.email()
-	let firstName = faker.name.firstName()
-	let lastName = faker.name.lastName()
+	t.fixtureCtx.fakeUserEmail = faker.internet.email()
+	t.fixtureCtx.firstName = faker.name.firstName()
+	t.fixtureCtx.lastName = faker.name.lastName()
 
 	await t.expect(await mainPage.getMainLogo()).ok()
 	await mainPage.clickOnSignInButton()
 	await t.expect(await authenticationPage.getAuthenticationHeader()).eql('AUTHENTICATION')
-	await authenticationPage.createAccount(fakeUserEmail)
+	await authenticationPage.createAccount(t.fixtureCtx.fakeUserEmail)
 	await t.expect(await authenticationPage.getAccountCreationForm()).ok()
 	await authenticationPage.providePersonalInformation(
 		'Mrs',
-		'Personal', firstName,
-		'Personal', lastName,
+		'Personal', t.fixtureCtx.firstName,
+		'Personal', t.fixtureCtx.lastName,
 		userPassword,
 		'12',
 		'10',
@@ -45,4 +45,15 @@ test('Unregistered user can register to Your Logo shop', async t => {
 	)
 	await authenticationPage.clickOnRegisterButton()
 	await t.expect(await myAccountPage.getMyAccountNavigationText()).eql('My account')
+	await t.expect(await myAccountPage.getUserName()).eql(`${t.fixtureCtx.firstName} ${t.fixtureCtx.lastName}`)
+})
+
+test('Registered user can login into account', async t => {
+	await t.expect(await mainPage.getMainLogo()).ok()
+	await mainPage.clickOnSignInButton()
+	await t.expect(await authenticationPage.getAuthenticationHeader()).eql('AUTHENTICATION')
+	await authenticationPage.enterEmailAddress(t.fixtureCtx.fakeUserEmail)
+	await authenticationPage.enterPassword(userPassword)
+	await authenticationPage.clickOnSignInButton()
+	await t.expect(await myAccountPage.getUserName()).eql(`${t.fixtureCtx.firstName} ${t.fixtureCtx.lastName}`)
 })

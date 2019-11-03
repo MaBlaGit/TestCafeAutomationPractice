@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./e2e/**/*.js",
-    "test": "testcafe chrome -e -u ./e2e/tests/**/*.js",
+    "test":  "testcafe chrome -e -u ./e2e/tests/**/*.js && testcafe firefox -e -u ./e2e/tests/**/*.js",
     "test-chrome": "npx testcafe chrome -e -u ./e2e/tests/**/*.js",
     "test-firefox": "npx testcafe firefox -e -u ./e2e/tests/**/*.js",
     "test-all": "npx testcafe chrome -e -u ./e2e/tests/**/*.js && npx testcafe firefox -e -u ./e2e/tests/**/*.js"
@@ -18,6 +18,6 @@
     "eslint-plugin-require": "0.0.1",
     "eslint-plugin-testcafe": "^0.2.1",
     "faker": "^4.1.0",
-    "testcafe": "^1.5.0"
+    "testcafe": "^1.6.0"
   }
 }
