@@ -1,13 +1,15 @@
 import { MainPage } from '../../pages/MainPage'
 import { AuthenticationPage } from '../../pages/AuthenticationPage'
 import { MyAccountPage } from '../../pages/MyAccountPage'
-import { getUrl } from '../../helpers/helper'
-import { userPassword } from '../../data/data'
+import { SearchPage } from '../../pages/SearchPage'
+import { getUrl, userRole, clearInput } from '../../helpers/helper'
+import { userPassword, products } from '../../data/data'
 let faker = require('faker')
 
 const mainPage = new MainPage()
 const authenticationPage = new AuthenticationPage()
 const myAccountPage = new MyAccountPage()
+const searchPage = new SearchPage()
 
 fixture`Create account, log in and make order`
 	.page(getUrl('/index.php'))
@@ -56,4 +58,19 @@ test('Registered user can login into account', async t => {
 	await authenticationPage.enterPassword(userPassword)
 	await authenticationPage.clickOnSignInButton()
 	await t.expect(await myAccountPage.getUserName()).eql(`${t.fixtureCtx.firstName} ${t.fixtureCtx.lastName}`)
+})
+
+test('Logged user can add product to his cart', async t => {
+	await t.useRole(userRole(t.fixtureCtx.fakeUserEmail, userPassword))
+
+	for(let i=0; i < products.length; i++) {
+		await mainPage.searchProduct(products[i])
+		await mainPage.clickOnTheSearchProduct()
+		await searchPage.hoverOnElement(await searchPage.getProductContainer())
+		await searchPage.clickOnAddToCartButton ()
+		await searchPage.clickOnContinueSchoppingButton()
+		await clearInput(mainPage.searchInputField)
+	}
+
+	await t.expect(await mainPage.getCartQuantity()).eql('3')
 })
