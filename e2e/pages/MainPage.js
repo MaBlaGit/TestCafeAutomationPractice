@@ -6,6 +6,7 @@ export class MainPage {
 		this.signInButton = Selector('.login')
 		this.searchInputField = Selector('#search_query_top')
 		this.searchButton = Selector('button').withAttribute('class', 'btn btn-default button-search')
+		this.cartQuantity = Selector('a > span[class=\'ajax_cart_quantity\']')
 	}
 
   getMainLogo = async () => this.mainLogo
@@ -20,5 +21,9 @@ export class MainPage {
 
 	clickOnTheSearchProduct = async () => {
 		await t.click(this.searchButton)
+	}
+
+	getCartQuantity = async () => {
+		return this.cartQuantity.innerText
 	}
 }

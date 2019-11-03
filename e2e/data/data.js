@@ -6,9 +6,9 @@ module.exports = {
 	userPassword: 'test123',
 
 	//test data
-	products: ['Blouse',
+	products: [
+		'Blouse',
 		'Faded Short Sleeve T-shirts',
-		'Printed Chiffon Dress',
-		'This product is not in the stock'
+		'Printed Chiffon Dress'
 	]
 }
